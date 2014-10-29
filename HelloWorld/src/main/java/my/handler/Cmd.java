@@ -11,21 +11,34 @@ public class Cmd implements Handler {
 	public String process(HttpServletRequest request,
 			HttpServletResponse response) {
 		
-		request.setAttribute("HEADER", "header.jsp");	
+		String path = request.getRequestURI();
+		if (path.startsWith("/"))
+			path = path.substring(1);
 		
-		String page=request.getParameter("page");
+		String page= path.replaceAll(".cmd", ".jsp");//request.getParameter("page");
+		
+		
+		System.out.println(path);
 		
 		Navigation nav=Navigation.getNavigation();
 		
-		if(nav.exists(page)==null)
+		request.setAttribute("NAV", nav);
+		
+		request.setAttribute("HEADER", "header.jsp");	
+		
+		
+		
+		
+		
+		if(nav.exists(path)==null)
 			page="home.jsp";
 		
 		request.setAttribute("CONTENT", page);
-		
+		request.setAttribute("PATH", path);
 		
 		request.setAttribute("FOOTER", "footer.jsp");		
 		
-		return "index.jsp";
+		return "/index.jsp";
 	}
 
 }

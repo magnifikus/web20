@@ -32,7 +32,11 @@
   </servlet-mapping>
   <servlet-mapping>
     <servlet-name>ControllerServlet</servlet-name>
-    <url-pattern>/cmd</url-pattern>
+    <url-pattern>/</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>ControllerServlet</servlet-name>
+    <url-pattern>*.cmd</url-pattern>
   </servlet-mapping>
   
   

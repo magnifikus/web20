@@ -27,7 +27,15 @@ public class NavObject implements Navigatable {
 	}
 
 	public Boolean isActive(String page) {
-		System.out.println(page +" vs "+this.page);
+		if (this.testActive(page))
+			return true;
+		for (Navigatable child : childs)
+			if (child.isActive(page))
+				return true;
+		return false;
+	}
+	
+	public Boolean testActive(String page) {
 		return this.page.equals(page);
 	}
 
@@ -42,6 +50,10 @@ public class NavObject implements Navigatable {
 		}
 		
 		return null;
+	}
+
+	public List<Navigatable> getChilds() {
+		return childs;
 	}
 
 

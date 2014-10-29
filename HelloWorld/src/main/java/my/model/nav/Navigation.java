@@ -12,20 +12,29 @@ public class Navigation implements Navigatable {
 	public static Navigation getNavigation() {
 		if (cache == null) {
 			cache = new Navigation();
-			NavObject t1 = new NavObject("Home", "home.jsp");
-			NavObject t2 = new NavObject("About", "about.jsp");
-			NavObject t3 = new NavObject("Impressum", "about2.jsp");
-			NavObject t4 = new NavObject("Killswitch", "about3.jsp");
+			NavObject t1 = new NavObject("Home", "home.cmd");
+			NavObject t2 = new NavObject("Shop", "about.cmd");
+			NavObject t3 = new NavObject("Kontakt", "about2.cmd");
+			NavObject t4 = new NavObject("MyHelloWorld", "about3.cmd");
 			
 			cache.addChild(t1);
 			cache.addChild(t2);
 			cache.addChild(t3);
 			cache.addChild(t4);
+					
+			t2.addChild(new NavObject("Autos", "shop/autos.cmd"));
+			t2.addChild(new NavObject("Häuser", "shop/haeuser.cmd"));
+			t2.addChild(new NavObject("Boote", "shop/boote.cmd"));
+			t2.addChild(new NavObject("Inseln", "shop/inseln.cmd"));
 			
-			NavObject p1 = new NavObject("Adresse", "adr.jsp");
-			t2.addChild(p1);
+			t3.addChild(new NavObject("Anfahrt", "adr.cmd"));
+			t3.addChild(new NavObject("Impressum", "adr.cmd"));
+			t3.addChild(new NavObject("Kontaktformular", "adr.cmd"));
 			
 			
+			t4.addChild(new NavObject("Login", "adr.cmd"));
+			t4.addChild(new NavObject("Signup", "adr.cmd"));
+	
 		}
 		
 		return cache;
@@ -37,7 +46,7 @@ public class Navigation implements Navigatable {
 	public void addChild(Navigatable child) {
 		childs.add(child);
 	}
-
+	
 	public Navigatable getParent() {
 		return null;
 	}
@@ -56,6 +65,22 @@ public class Navigation implements Navigatable {
 
 	public Boolean isActive(String page) {
 		return false;
+	}
+	
+	
+	
+	private Navigatable getActiveTab(String page) {
+		for (Navigatable nav : childs)
+			if (nav.isActive(page))
+				return nav;
+		return null;
+	}
+	public List<Navigatable> getSubPages(String page) {
+		Navigatable tab = this.getActiveTab(page);
+		if (tab == null)
+			return new LinkedList<Navigatable>();
+		return tab.getChilds();
+		
 	}
 
 
