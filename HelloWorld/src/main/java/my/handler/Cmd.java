@@ -29,19 +29,16 @@ public class Cmd implements Handler {
 		request.setAttribute("HEADER", "header.jsp");	
 		
 		Locale loc = null;
-		if (request.getParameter("lang") != null)
+		if (request.getParameter("lang") != null) {
 			loc = new Locale(request.getParameter("lang"));
-		else
-			loc = request.getLocale();
-		
-		if (loc == null)
-			loc = Locale.GERMAN;
-		
-		
-		System.out.println(loc.getLanguage());
-		
-		request.setAttribute("LANG",loc.getLanguage());
-		
+			request.getSession().setAttribute("LOCALE", loc.getLanguage());
+		} else {
+			String sloc = (String)request.getSession().getAttribute("LOCALE");
+			if (sloc != null)
+				loc = new Locale(sloc);
+			else 
+				loc = request.getLocale();
+		}
 		response.setLocale(loc);
 		
 		

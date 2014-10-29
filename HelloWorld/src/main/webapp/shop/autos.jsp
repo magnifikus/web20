@@ -3,7 +3,7 @@
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib uri="/WEB-INF/lab4inf.tld"        prefix="lab4" %>
 
-<fmt:setLocale value="${LANG}" />
+<fmt:setLocale value="${pageContext.response.locale}" />
 <fmt:setBundle basename="text" />
 <p>About</p>
 
